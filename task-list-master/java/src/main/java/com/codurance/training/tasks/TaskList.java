@@ -30,6 +30,7 @@ public final class TaskList implements Runnable {
     }
 
     public void run() {
+    	help();
         while (true) {
             out.print("> ");
             out.flush();
@@ -70,6 +71,10 @@ public final class TaskList implements Runnable {
                 break;
         }
     }
+    
+    /**
+     * Shows the tasks' list of each project 
+     */
 
     private void show() {
         for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
@@ -81,6 +86,7 @@ public final class TaskList implements Runnable {
         }
     }
 
+    
     private void add(String commandLine) {
         String[] subcommandRest = commandLine.split(" ", 2);
         String subcommand = subcommandRest[0];
@@ -92,10 +98,19 @@ public final class TaskList implements Runnable {
         }
     }
 
+    /**
+     * Create a new project named "name" with an empty list of tasks
+     * @param name
+     */
     private void addProject(String name) {
         tasks.put(name, new ArrayList<Task>());
     }
 
+    /**
+     * Add a task to the tasks' list of a project with its description
+     * @param project
+     * @param description
+     */
     private void addTask(String project, String description) {
         List<Task> projectTasks = tasks.get(project);
         if (projectTasks == null) {
@@ -106,19 +121,33 @@ public final class TaskList implements Runnable {
         projectTasks.add(new Task(nextId(), description, false));
     }
 
+    /**
+     * Check the task with the id as "Done"
+     * @param idString
+     */
     private void check(String idString) {
         setDone(idString, true);
     }
 
+    /**
+     * Check the task with the id as "To Do"
+     * @param idString
+     */
     private void uncheck(String idString) {
         setDone(idString, false);
     }
 
+    /**
+     * Set a task to "done" or "to Do"
+     * @param idString
+     * @param done
+     */
     private void setDone(String idString, boolean done) {
         int id = Integer.parseInt(idString);
         for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
             for (Task task : project.getValue()) {
                 if (task.getId() == id) {
+                	//Calls the setDone method in the class Task.java
                     task.setDone(done);
                     return;
                 }
@@ -128,6 +157,9 @@ public final class TaskList implements Runnable {
         out.println();
     }
 
+    /**
+     * Displays commands' list
+     */
     private void help() {
         out.println("Commands:");
         out.println("  show");
