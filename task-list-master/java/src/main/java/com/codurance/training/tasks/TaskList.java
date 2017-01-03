@@ -168,6 +168,20 @@ public final class TaskList implements Runnable {
         out.println("  check <task ID>");
         out.println("  uncheck <task ID>");
         out.println();
+        /*              "Commands:",
+					  "show :",
+						"-shows the tasks' list of each project
+					  add project <project name>:
+						-create a new project named <project name> with an empty list of tasks
+					  add task <project name> <task description>:
+						-add a task to the tasks' list of the project <project name> with a description
+					  check <task ID>:
+						-set the task with the ID <task ID> as Done
+					  uncheck <task ID>:
+						-set the task with the ID <task ID> as To Do
+					  help:
+						-displays the commands' list 
+					  quit"*/
     }
 
     private void error(String command) {
