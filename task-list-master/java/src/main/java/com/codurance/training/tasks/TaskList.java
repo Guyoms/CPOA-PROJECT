@@ -162,26 +162,21 @@ public final class TaskList implements Runnable {
      */
     private void help() {
         out.println("Commands:");
-        out.println("  show");
-        out.println("  add project <project name>");
-        out.println("  add task <project name> <task description>");
-        out.println("  check <task ID>");
-        out.println("  uncheck <task ID>");
-        out.println();
-        /*              "Commands:",
-					  "show :",
-						"-shows the tasks' list of each project
-					  add project <project name>:
-						-create a new project named <project name> with an empty list of tasks
-					  add task <project name> <task description>:
-						-add a task to the tasks' list of the project <project name> with a description
-					  check <task ID>:
-						-set the task with the ID <task ID> as Done
-					  uncheck <task ID>:
-						-set the task with the ID <task ID> as To Do
-					  help:
-						-displays the commands' list 
-					  quit"*/
+        out.println("  show :\n"
+        		+ "\t-shows the tasks' list of each project");
+        out.println("  add project <project name> :\n"
+        		+ "\t-create a new project named <project name> with an empty list of tasks");
+        out.println("  add task <project name> <task description> :\n"
+        		+ "\t-add a task to the tasks' list of the project <project name> with a description");
+        out.println("  check <task ID> :\n"
+        		+ "\t-set the task with the ID <task ID> as Done");
+        out.println("  uncheck <task ID> :\n"
+        		+ "\t-set the task with the ID <task ID> as To Do");
+        out.println("  help : \n"
+						+ "\t-displays the commands' list \n"
+					    + "  quit :\n"
+					    + "\t-close the application");
+        
     }
 
     private void error(String command) {

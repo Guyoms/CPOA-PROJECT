@@ -53,6 +53,21 @@ public final class ApplicationTest {
 
     @Test(timeout = 1000) public void
     it_works() throws IOException {
+    	readLines("Commands:");
+    	readLines("  show :\n"
+        		+ "\t-shows the tasks' list of each project");
+    	readLines("  add project <project name> :\n"
+        		+ "\t-create a new project named <project name> with an empty list of tasks");
+    	readLines("  add task <project name> <task description> :\n"
+        		+ "\t-add a task to the tasks' list of the project <project name> with a description");
+    	readLines("  check <task ID> :\n"
+        		+ "\t-set the task with the ID <task ID> as Done");
+    	readLines("  uncheck <task ID> :\n"
+        		+ "\t-set the task with the ID <task ID> as To Do");
+    	readLines("  help : \n"
+						+ "\t-displays the commands' list \n"
+					    + "  quit :\n"
+					    + "\t-close the application");
         execute("show");
 
         execute("add project secrets");
