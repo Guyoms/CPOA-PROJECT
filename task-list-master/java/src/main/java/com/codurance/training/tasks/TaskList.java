@@ -1,10 +1,14 @@
 package com.codurance.training.tasks;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +16,7 @@ import java.util.Map;
 public final class TaskList implements Runnable {
     private static final String QUIT = "quit";
 
+    //List of project with a list of their tasks
     private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
     private final BufferedReader in;
     private final PrintWriter out;
@@ -52,7 +57,7 @@ public final class TaskList implements Runnable {
         String command = commandRest[0];
         switch (command) {
             case "show":
-                show();
+            	show();
                 break;
             case "add":
                 add(commandRest[1]);
@@ -66,6 +71,13 @@ public final class TaskList implements Runnable {
             case "help":
                 help();
                 break;
+            case "deadline":
+            	deadLine(commandRest[1]);
+            	break;
+            case "today": 
+            	today();
+            	break;
+            
             default:
                 error(command);
                 break;
@@ -172,6 +184,10 @@ public final class TaskList implements Runnable {
         		+ "\t-set the task with the ID <task ID> as Done");
         out.println("  uncheck <task ID> :\n"
         		+ "\t-set the task with the ID <task ID> as To Do");
+        out.println("  deadline <task ID> <dd/MM/yy> :\n"
+        		+ "\t-set a deadline to a task");
+        out.println("  today :\n"
+        		+ "\t-displays all of the tasks which the deadline is today");
         out.println("  help : \n"
 						+ "\t-displays the commands' list \n"
 					    + "  quit :\n"
@@ -186,5 +202,48 @@ public final class TaskList implements Runnable {
 
     private long nextId() {
         return ++lastId;
+    }
+    
+    /**
+     * add a deadline to a task
+     * @param Id
+     * @param date
+     */
+    private void deadLine(String finCommande){
+    	
+    	 String[] subcommandRest = finCommande.split(" ", 2);         
+         int id = Integer.parseInt(subcommandRest[0]);
+         
+         for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
+             for (Task task : project.getValue()) {
+                 if (task.getId() == id) {
+                     task.setDeadline(subcommandRest[1]);
+                     return;
+                 }
+             }
+         }
+    }
+    
+    /**
+     * Displays all of the tasks which the deadline is today
+     */
+    private void today(){
+    	// We take today's date
+    	String format = "dd/MM/yy";
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format); 
+        java.util.Date date = new java.util.Date();
+        
+        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
+            for (Task task : project.getValue()) {
+            	
+            	//Si la deadline est aujourd'hui 
+                if (task.getDeadline().equals(formater.format(date))) {
+                	//On affiche la tache
+                	out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+                    return;
+                }
+            }
+        }
+        
     }
 }

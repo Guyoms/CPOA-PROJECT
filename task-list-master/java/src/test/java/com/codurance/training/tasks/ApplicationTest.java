@@ -64,6 +64,10 @@ public final class ApplicationTest {
         		+ "\t-set the task with the ID <task ID> as Done");
     	readLines("  uncheck <task ID> :\n"
         		+ "\t-set the task with the ID <task ID> as To Do");
+    	readLines("  deadline <task ID> <dd/MM/yy> :\n"
+         		+ "\t-set a deadline to a task");
+        readLines("  today :\n"
+         		+ "\t-displays all of the tasks which the deadline is today");
     	readLines("  help : \n"
 						+ "\t-displays the commands' list \n"
 					    + "  quit :\n"
