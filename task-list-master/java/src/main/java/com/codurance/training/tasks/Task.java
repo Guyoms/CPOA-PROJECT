@@ -1,6 +1,9 @@
 package com.codurance.training.tasks;
 
-public final class Task {
+import java.util.Observable;
+
+
+public final class Task extends Observable{
     private final long id;
     private final String description;
     private boolean done;
