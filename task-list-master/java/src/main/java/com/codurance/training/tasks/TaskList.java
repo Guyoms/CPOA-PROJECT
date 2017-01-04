@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class TaskList implements Runnable {
     private static final String QUIT = "quit";
 
-    private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
+    private final List<Project> tasks = new ArrayList<Project>();
     private final BufferedReader in;
     private final PrintWriter out;
 
@@ -66,6 +64,9 @@ public final class TaskList implements Runnable {
             case "help":
                 help();
                 break;
+            case "delete":
+            	delete(commandRest[1]);
+            	break;
             default:
                 error(command);
                 break;
@@ -77,9 +78,10 @@ public final class TaskList implements Runnable {
      */
 
     private void show() {
-        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-            out.println(project.getKey());
-            for (Task task : project.getValue()) {
+    	for(int i=0; i<tasks.size(); i++){
+        	Project project = tasks.get(i);
+        	out.println(project.getNom());
+            for (Task task : project.getList()) {
                 out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
             }
             out.println();
@@ -103,7 +105,7 @@ public final class TaskList implements Runnable {
      * @param name
      */
     private void addProject(String name) {
-        tasks.put(name, new ArrayList<Task>());
+        tasks.add(new Project(name));
     }
 
     /**
@@ -112,7 +114,13 @@ public final class TaskList implements Runnable {
      * @param description
      */
     private void addTask(String project, String description) {
-        List<Task> projectTasks = tasks.get(project);
+    	List<Task> projectTasks = null;
+    	for(int i=0; i<tasks.size();i++){
+    		if (tasks.get(i).getNom().equals(project)){
+    			projectTasks = tasks.get(i).getList();
+    		}
+    	}
+        
         if (projectTasks == null) {
             out.printf("Could not find a project with the name \"%s\".", project);
             out.println();
@@ -144,8 +152,9 @@ public final class TaskList implements Runnable {
      */
     private void setDone(String idString, boolean done) {
         int id = Integer.parseInt(idString);
-        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-            for (Task task : project.getValue()) {
+        for(int i=0; i<tasks.size(); i++){
+        	Project project = tasks.get(i);
+            for (Task task : project.getList()) {
                 if (task.getId() == id) {
                 	//Calls the setDone method in the class Task.java
                     task.setDone(done);
@@ -177,6 +186,24 @@ public final class TaskList implements Runnable {
 					    + "  quit :\n"
 					    + "\t-close the application");
         
+    }
+    
+    /*
+     * 
+     */
+    private boolean delete(String idString){
+    	int id = Integer.parseInt(idString);
+    	for(int i=0; i<tasks.size(); i++){
+    		Project project = tasks.get(i);
+            for (Task task : project.getList()) {
+                if (task.getId() == id) {
+                    task = null;
+                    return true;
+                }
+            }
+        }
+        out.printf("Could not find a task with an ID of %d.", id);
+        return false;
     }
 
     private void error(String command) {
