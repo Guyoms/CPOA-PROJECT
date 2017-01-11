@@ -1,5 +1,6 @@
 package com.codurance.training.tasks;
 
+import java.sql.Date;
 import java.util.Observable;
 
 
@@ -7,11 +8,33 @@ public final class Task extends Observable{
     private final long id;
     private final String description;
     private boolean done;
+    private String deadline; 
 
+    /**
+     *  Constructeur paramétré
+     * @param id
+     * @param description
+     * @param done
+     */
     public Task(long id, String description, boolean done) {
         this.id = id;
         this.description = description;
         this.done = done;
+        this.deadline = null;
+    }
+    
+    /**
+     * Constructeur paramétré
+     * @param id
+     * @param description
+     * @param done
+     * @param deadline
+     */
+    public Task(long id, String description, boolean done, String deadline) {
+        this.id = id;
+        this.description = description;
+        this.done = done;
+        this.deadline = deadline;
     }
 
     public long getId() {
@@ -29,4 +52,12 @@ public final class Task extends Observable{
     public void setDone(boolean done) {
         this.done = done;
     }
+
+	public String getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
+	}
 }
