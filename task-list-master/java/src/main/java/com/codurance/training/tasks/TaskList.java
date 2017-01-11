@@ -1,7 +1,11 @@
 package com.codurance.training.tasks;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.swing.ListCellRenderer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,16 +18,29 @@ import java.util.List;
 
 public final class TaskList implements Runnable {
     private static final String QUIT = "quit";
-
-    private final List<Project> tasks = new ArrayList<Project>();
+    
+    private List<Project> tasks = new ArrayList<Project>();
     //List of project with a list of their tasks
-    //private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
+    private static Map<String, Command> ListCommands = new HashMap<String, Command>();
+    public static void InitiateListCommands() {
+		ListCommands.put("delete", new Delete());
+		/*ListCommands.put("add", new Add());
+		ListCommands.put("check", new Check());
+		ListCommands.put("uncheck", new Uncheck());
+		ListCommands.put("deadline", new Deadline());
+		ListCommands.put("today", new Today());
+		ListCommands.put("help", new Help());
+		ListCommands.put("view", new View());*/
+	}
+
+	//private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
     private final BufferedReader in;
     private final PrintWriter out;
 
     private long lastId = 0;
 
     public static void main(String[] args) throws Exception {
+    	InitiateListCommands();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(System.out);
         new TaskList(in, out).run();
@@ -55,6 +72,13 @@ public final class TaskList implements Runnable {
     private void execute(String commandLine) throws ArrayIndexOutOfBoundsException {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
+        try{
+        	
+        }
+        catch(Exception e){
+        	
+        }
+        
         switch (command) {
             case "view":
             	switch (commandRest[1]) {
@@ -82,6 +106,7 @@ public final class TaskList implements Runnable {
                 help();
                 break;
             case "delete":
+            	//tasks = ListCommands.get(command).execute(commandRest[1], tasks);
             	delete(commandRest[1]);
             	break;
             case "deadline":
@@ -223,19 +248,19 @@ public final class TaskList implements Runnable {
     /*
      * 
      */
-    private boolean delete(String idString){
+    private void delete(String idString){
     	int id = Integer.parseInt(idString);
     	for(int i=0; i<tasks.size(); i++){
     		Project project = tasks.get(i);
             for (Task task : project.getList()) {
                 if (task.getId() == id) {
                     task = null;
-                    return true;
+                    return;
                 }
             }
         }
         out.printf("Could not find a task with an ID of %d.", id);
-        return false;
+        return;
     }
 
     /**

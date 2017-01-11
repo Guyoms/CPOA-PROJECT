@@ -8,7 +8,7 @@ public final class Task extends Observable{
     private final long id;
     private final String description;
     private boolean done;
-    private String deadline; 
+    private String deadline;
 
     /**
      *  Constructeur paramétré
