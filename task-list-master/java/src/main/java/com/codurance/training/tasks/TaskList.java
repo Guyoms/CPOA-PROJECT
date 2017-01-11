@@ -52,12 +52,22 @@ public final class TaskList implements Runnable {
         }
     }
 
-    private void execute(String commandLine) {
+    private void execute(String commandLine) throws ArrayIndexOutOfBoundsException {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
         switch (command) {
-            case "show":
-            	show();
+            case "view":
+            	switch (commandRest[1]) {
+            		case "by project":
+                    	view();
+            			break;
+            		case "by date":
+            			//TODO
+            			break;
+            		case "by deadline":
+            			//TODO
+            			break;
+            	}
                 break;
             case "add":
                 add(commandRest[1]);
@@ -90,7 +100,7 @@ public final class TaskList implements Runnable {
      * Shows the tasks' list of each project 
      */
 
-    private void show() {
+    private void view() {
     	for(int i=0; i<tasks.size(); i++){
         	Project project = tasks.get(i);
         	out.println(project.getNom());
@@ -184,8 +194,11 @@ public final class TaskList implements Runnable {
      */
     private void help() {
         out.println("Commands:");
-        out.println("  show :\n"
-        		+ "\t-shows the tasks' list of each project");
+        out.println("  view by :\n"
+        		+ "\t-project : shows the tasks' list of each project\n"
+        		+ "\t-date : shows the tasks' list by date\n"
+        		+ "\t-dead line : shows the tasks' list of each project\n"
+        		);
         out.println("  add project <project name> :\n"
         		+ "\t-create a new project named <project name> with an empty list of tasks");
         out.println("  add task <project name> <task description> :\n"
@@ -225,6 +238,10 @@ public final class TaskList implements Runnable {
         return false;
     }
 
+    /**
+     * Dislays an error when the command is not recognized
+     * @param command
+     */
     private void error(String command) {
         out.printf("I don't know what the command \"%s\" is.", command);
         out.println();
