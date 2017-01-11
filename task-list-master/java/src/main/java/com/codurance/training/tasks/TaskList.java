@@ -108,10 +108,6 @@ public final class TaskList implements Runnable {
             case "deadline":
             	deadLine(commandRest[1]);
             	break;
-
-            case "today": 
-            	today();
-            	break;
             default:
                 error(command);
                 break;
