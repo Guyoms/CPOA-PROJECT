@@ -195,6 +195,10 @@ public final class TaskList implements Runnable {
         
     }
 
+    /**
+     * Dislays an error when the command is not recognized
+     * @param command
+     */
     private void error(String command) {
         out.printf("I don't know what the command \"%s\" is.", command);
         out.println();
