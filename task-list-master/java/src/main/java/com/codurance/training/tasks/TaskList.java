@@ -24,13 +24,13 @@ public final class TaskList implements Runnable {
     private static Map<String, Command> ListCommands = new HashMap<String, Command>();
     public static void InitiateListCommands() {
 		ListCommands.put("delete", new Delete());
-		/*ListCommands.put("add", new Add());
-		ListCommands.put("check", new Check());
-		ListCommands.put("uncheck", new Uncheck());
-		ListCommands.put("deadline", new Deadline());
+		//ListCommands.put("add", new Add());
+		//ListCommands.put("check", new Check());
+		//ListCommands.put("uncheck", new Uncheck());
+		//ListCommands.put("deadline", new Deadline());
 		ListCommands.put("today", new Today());
-		ListCommands.put("help", new Help());
-		ListCommands.put("view", new View());*/
+		//ListCommands.put("help", new Help());
+		//ListCommands.put("view", new View());
 	}
 
 	//private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
@@ -72,8 +72,16 @@ public final class TaskList implements Runnable {
     private void execute(String commandLine) throws ArrayIndexOutOfBoundsException {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
+        String arguments;
+        if (command.length()==commandLine.length()){
+        	arguments="chaine pour passer le try/catch";
+        }
+        else{
+        	arguments = commandRest[1];
+        }
+        
         try{
-        	
+        	tasks = ListCommands.get(command).execute(arguments, tasks);
         }
         catch(Exception e){
         	
@@ -105,16 +113,16 @@ public final class TaskList implements Runnable {
             case "help":
                 help();
                 break;
-            case "delete":
-            	//tasks = ListCommands.get(command).execute(commandRest[1], tasks);
-            	delete(commandRest[1]);
-            	break;
+            //case "delete":
+            	
+            	//delete(commandRest[1]);
+            	//break;
             case "deadline":
             	deadLine(commandRest[1]);
             	break;
-            case "today": 
+           /* case "today": 
             	today();
-            	break;
+            	break;*/
             default:
                 error(command);
                 break;
@@ -254,7 +262,7 @@ public final class TaskList implements Runnable {
     		Project project = tasks.get(i);
             for (Task task : project.getList()) {
                 if (task.getId() == id) {
-                    task = null;
+                    project.getList().remove(task);
                     return;
                 }
             }
@@ -283,7 +291,7 @@ public final class TaskList implements Runnable {
      */
     private void deadLine(String finCommande){
     	
-    	 String[] subcommandRest = finCommande.split(" ", 2);         
+    	 String[] subcommandRest = finCommande.split(" ", 2);      
          int id = Integer.parseInt(subcommandRest[0]);
          
          for(int i=0; i<tasks.size(); i++){

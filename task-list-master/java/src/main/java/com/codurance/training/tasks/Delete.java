@@ -10,7 +10,7 @@ public class Delete implements Command {
     		Project project = projects.get(i);
             for (Task task : project.getList()) {
                 if (task.getId() == id) {
-                    task = null;
+                	project.getList().remove(task);
                     return projects;
                 }
             }
@@ -18,6 +18,12 @@ public class Delete implements Command {
         System.out.printf("Could not find a task with an ID of %d.", id);
         return projects;
 		
+	}
+
+	@Override
+	public String toString() {
+		String retour = "  delete <task ID> :\n" + "\t-delete the task with the ID <task ID>";
+		return retour;
 	}
 
 }
