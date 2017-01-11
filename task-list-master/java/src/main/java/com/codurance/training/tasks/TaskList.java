@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.swing.ListCellRenderer;
+import javax.swing.text.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,13 +25,16 @@ public final class TaskList implements Runnable {
     private static Map<String, Command> ListCommands = new HashMap<String, Command>();
     public static void InitiateListCommands() {
 		ListCommands.put("delete", new Delete());
+
 		//ListCommands.put("add", new Add());
 		//ListCommands.put("check", new Check());
 		//ListCommands.put("uncheck", new Uncheck());
 		//ListCommands.put("deadline", new Deadline());
 		ListCommands.put("today", new Today());
 		//ListCommands.put("help", new Help());
-		//ListCommands.put("view", new View());
+		
+		ListCommands.put("deadline", new Deadline());
+		ListCommands.put("view", new view());
 	}
 
 	//private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
@@ -81,6 +85,7 @@ public final class TaskList implements Runnable {
         }
         
         try{
+
         	tasks = ListCommands.get(command).execute(arguments, tasks);
         }
         catch(Exception e){
@@ -88,19 +93,6 @@ public final class TaskList implements Runnable {
         }
         
         switch (command) {
-            case "view":
-            	switch (commandRest[1]) {
-            		case "by project":
-                    	view();
-            			break;
-            		case "by date":
-            			//TODO
-            			break;
-            		case "by deadline":
-            			//TODO
-            			break;
-            	}
-                break;
             case "add":
                 add(commandRest[1]);
                 break;
@@ -113,16 +105,13 @@ public final class TaskList implements Runnable {
             case "help":
                 help();
                 break;
-            //case "delete":
-            	
-            	//delete(commandRest[1]);
-            	//break;
             case "deadline":
             	deadLine(commandRest[1]);
             	break;
-           /* case "today": 
+
+            case "today": 
             	today();
-            	break;*/
+            	break;
             default:
                 error(command);
                 break;
@@ -226,12 +215,10 @@ public final class TaskList implements Runnable {
      * Displays commands' list
      */
     private void help() {
+    	
+    	
         out.println("Commands:");
-        out.println("  view by :\n"
-        		+ "\t-project : shows the tasks' list of each project\n"
-        		+ "\t-date : shows the tasks' list by date\n"
-        		+ "\t-dead line : shows the tasks' list of each project\n"
-        		);
+        out.println(ListCommands.get("view").toString());
         out.println("  add project <project name> :\n"
         		+ "\t-create a new project named <project name> with an empty list of tasks");
         out.println("  add task <project name> <task description> :\n"
@@ -240,8 +227,7 @@ public final class TaskList implements Runnable {
         		+ "\t-set the task with the ID <task ID> as Done");
         out.println("  uncheck <task ID> :\n"
         		+ "\t-set the task with the ID <task ID> as To Do");
-        out.println("  deadline <task ID> <dd/MM/yy> :\n"
-        		+ "\t-set a deadline to a task");
+        out.println(ListCommands.get("deadline").toString());
         out.println("  today :\n"
         		+ "\t-displays all of the tasks which the deadline is today");
         out.println("  delete <task ID> :\n"
