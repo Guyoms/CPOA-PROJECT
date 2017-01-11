@@ -56,6 +56,11 @@ public final class ApplicationTest {
     	readLines("Commands:");
     	readLines("  show :\n"
         		+ "\t-shows the tasks' list of each project");
+        readLines("  view by :\n"
+        		+ "\t-project : shows the tasks' list of each project"
+        		+ "\t-date : shows the tasks' list by date"
+        		+ "\t-dead line : shows the tasks' list of each project"
+        		);
     	readLines("  add project <project name> :\n"
         		+ "\t-create a new project named <project name> with an empty list of tasks");
     	readLines("  add task <project name> <task description> :\n"
@@ -73,7 +78,7 @@ public final class ApplicationTest {
 					    + "  quit :\n"
 					    + "\t-close the application");
         execute("show");
-
+        
         execute("add project secrets");
         execute("add task secrets Eat more donuts.");
         execute("add task secrets Destroy all humans.");
