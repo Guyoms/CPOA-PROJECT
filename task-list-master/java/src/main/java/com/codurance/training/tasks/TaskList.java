@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class TaskList implements Runnable {
     private static final String QUIT = "quit";
 
+    private final List<Project> tasks = new ArrayList<Project>();
     //List of project with a list of their tasks
-    private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
+    //private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
     private final BufferedReader in;
     private final PrintWriter out;
 
@@ -71,13 +71,15 @@ public final class TaskList implements Runnable {
             case "help":
                 help();
                 break;
+            case "delete":
+            	delete(commandRest[1]);
+            	break;
             case "deadline":
             	deadLine(commandRest[1]);
             	break;
             case "today": 
             	today();
             	break;
-            
             default:
                 error(command);
                 break;
@@ -89,9 +91,10 @@ public final class TaskList implements Runnable {
      */
 
     private void show() {
-        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-            out.println(project.getKey());
-            for (Task task : project.getValue()) {
+    	for(int i=0; i<tasks.size(); i++){
+        	Project project = tasks.get(i);
+        	out.println(project.getNom());
+            for (Task task : project.getList()) {
                 out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
             }
             out.println();
@@ -115,7 +118,7 @@ public final class TaskList implements Runnable {
      * @param name
      */
     private void addProject(String name) {
-        tasks.put(name, new ArrayList<Task>());
+        tasks.add(new Project(name));
     }
 
     /**
@@ -124,7 +127,13 @@ public final class TaskList implements Runnable {
      * @param description
      */
     private void addTask(String project, String description) {
-        List<Task> projectTasks = tasks.get(project);
+    	List<Task> projectTasks = null;
+    	for(int i=0; i<tasks.size();i++){
+    		if (tasks.get(i).getNom().equals(project)){
+    			projectTasks = tasks.get(i).getList();
+    		}
+    	}
+        
         if (projectTasks == null) {
             out.printf("Could not find a project with the name \"%s\".", project);
             out.println();
@@ -156,8 +165,9 @@ public final class TaskList implements Runnable {
      */
     private void setDone(String idString, boolean done) {
         int id = Integer.parseInt(idString);
-        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-            for (Task task : project.getValue()) {
+        for(int i=0; i<tasks.size(); i++){
+        	Project project = tasks.get(i);
+            for (Task task : project.getList()) {
                 if (task.getId() == id) {
                 	//Calls the setDone method in the class Task.java
                     task.setDone(done);
@@ -194,6 +204,24 @@ public final class TaskList implements Runnable {
 					    + "\t-close the application");
         
     }
+    
+    /*
+     * 
+     */
+    private boolean delete(String idString){
+    	int id = Integer.parseInt(idString);
+    	for(int i=0; i<tasks.size(); i++){
+    		Project project = tasks.get(i);
+            for (Task task : project.getList()) {
+                if (task.getId() == id) {
+                    task = null;
+                    return true;
+                }
+            }
+        }
+        out.printf("Could not find a task with an ID of %d.", id);
+        return false;
+    }
 
     /**
      * Dislays an error when the command is not recognized
@@ -218,8 +246,9 @@ public final class TaskList implements Runnable {
     	 String[] subcommandRest = finCommande.split(" ", 2);         
          int id = Integer.parseInt(subcommandRest[0]);
          
-         for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-             for (Task task : project.getValue()) {
+         for(int i=0; i<tasks.size(); i++){
+         	Project project = tasks.get(i);
+            for (Task task : project.getList()) {
                  if (task.getId() == id) {
                      task.setDeadline(subcommandRest[1]);
                      return;
@@ -237,9 +266,9 @@ public final class TaskList implements Runnable {
         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format); 
         java.util.Date date = new java.util.Date();
         
-        for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
-            for (Task task : project.getValue()) {
-            	
+        for(int i=0; i<tasks.size(); i++){
+         	Project project = tasks.get(i);
+            for (Task task : project.getList()) {
             	//Si la deadline est aujourd'hui 
                 if (task.getDeadline().equals(formater.format(date))) {
                 	//On affiche la tache
