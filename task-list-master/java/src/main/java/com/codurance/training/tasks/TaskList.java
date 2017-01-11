@@ -198,6 +198,8 @@ public final class TaskList implements Runnable {
         		+ "\t-set a deadline to a task");
         out.println("  today :\n"
         		+ "\t-displays all of the tasks which the deadline is today");
+        out.println("  delete <task ID> :\n"
+        		+ "\t-delete the task with the ID <task ID>");
         out.println("  help : \n"
 						+ "\t-displays the commands' list \n"
 					    + "  quit :\n"
