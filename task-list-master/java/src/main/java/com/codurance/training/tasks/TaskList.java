@@ -78,7 +78,6 @@ public final class TaskList implements Runnable {
         else{
         	arguments = commandRest[1];
         }
-        
         try{
 
         	tasks = ListCommands.get(command).execute(arguments, tasks);
@@ -87,9 +86,6 @@ public final class TaskList implements Runnable {
         	error(command);
         }
     }
-
-
-
 
 
     /**
