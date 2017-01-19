@@ -25,14 +25,10 @@ public final class TaskList implements Runnable {
     private static Map<String, Command> ListCommands = new HashMap<String, Command>();
     public static void InitiateListCommands() {
 		ListCommands.put("delete", new Delete());
-
-		//ListCommands.put("add", new Add());
+		ListCommands.put("add", new Add());
 		ListCommands.put("check", new Check());	
-		//ListCommands.put("uncheck", new Uncheck());
-		//ListCommands.put("deadline", new Deadline());
 		ListCommands.put("today", new Today());
 		ListCommands.put("help", new Help());
-		
 		ListCommands.put("deadline", new Deadline());
 		ListCommands.put("view", new view());
 	}
@@ -40,8 +36,6 @@ public final class TaskList implements Runnable {
 	//private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
     private final BufferedReader in;
     private final PrintWriter out;
-
-    private long lastId = 0;
 
     public static void main(String[] args) throws Exception {
     	InitiateListCommands();
@@ -90,74 +84,19 @@ public final class TaskList implements Runnable {
         	tasks = ListCommands.get(command).execute(arguments, tasks);
         }
         catch(Exception e){
-        	
-        }
-        
-        switch (command) {
-            case "add":
-                add(commandRest[1]);
-                break;
-            default:
-                error(command);
-                break;
-        }
-    }
-    
-    /**
-     * Shows the tasks' list of each project 
-     */
-
-    private void view() {
-    	for(int i=0; i<tasks.size(); i++){
-        	Project project = tasks.get(i);
-        	out.println(project.getNom());
-            for (Task task : project.getList()) {
-                out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
-            }
-            out.println();
+        	error(command);
         }
     }
 
-    
-    private void add(String commandLine) {
-        String[] subcommandRest = commandLine.split(" ", 2);
-        String subcommand = subcommandRest[0];
-        if (subcommand.equals("project")) {
-            addProject(subcommandRest[1]);
-        } else if (subcommand.equals("task")) {
-            String[] projectTask = subcommandRest[1].split(" ", 2);
-            addTask(projectTask[0], projectTask[1]);
-        }
-    }
 
-    /**
-     * Create a new project named "name" with an empty list of tasks
-     * @param name
-     */
-    private void addProject(String name) {
-        tasks.add(new Project(name));
-    }
+
+
 
     /**
      * Add a task to the tasks' list of a project with its description
      * @param project
      * @param description
      */
-    private void addTask(String project, String description) {
-    	List<Task> projectTasks = null;
-    	for(int i=0; i<tasks.size();i++){
-    		if (tasks.get(i).getNom().equals(project)){
-    			projectTasks = tasks.get(i).getList();
-    		}
-    	}
-        
-        if (projectTasks == null) {
-            out.printf("Could not find a project with the name \"%s\".", project);
-            out.println();
-            return;
-        }
-        projectTasks.add(new Task(nextId(), description, false));
-    }
 
     /**
      * Check the task with the id as "Done"
@@ -199,48 +138,6 @@ public final class TaskList implements Runnable {
     /**
      * Displays commands' list
      */
-    /*private void help() {
-    	
-    	
-        out.println("Commands:");
-        out.println(ListCommands.get("view").toString());
-        out.println("  add project <project name> :\n"
-        		+ "\t-create a new project named <project name> with an empty list of tasks");
-        out.println("  add task <project name> <task description> :\n"
-        		+ "\t-add a task to the tasks' list of the project <project name> with a description");
-        out.println("  check <task ID> :\n"
-        		+ "\t-set the task with the ID <task ID> as Done");
-        out.println("  uncheck <task ID> :\n"
-        		+ "\t-set the task with the ID <task ID> as To Do");
-        out.println(ListCommands.get("deadline").toString());
-        out.println("  today :\n"
-        		+ "\t-displays all of the tasks which the deadline is today");
-        out.println("  delete <task ID> :\n"
-        		+ "\t-delete the task with the ID <task ID>");
-        out.println("  help : \n"
-						+ "\t-displays the commands' list \n"
-					    + "  quit :\n"
-					    + "\t-close the application");
-        
-    }*/
-    
-    /*
-     * 
-     */
-    private void delete(String idString){
-    	int id = Integer.parseInt(idString);
-    	for(int i=0; i<tasks.size(); i++){
-    		Project project = tasks.get(i);
-            for (Task task : project.getList()) {
-                if (task.getId() == id) {
-                    project.getList().remove(task);
-                    return;
-                }
-            }
-        }
-        out.printf("Could not find a task with an ID of %d.", id);
-        return;
-    }
 
     /**
      * Dislays an error when the command is not recognized
@@ -249,53 +146,5 @@ public final class TaskList implements Runnable {
     private void error(String command) {
         out.printf("I don't know what the command \"%s\" is.", command);
         out.println();
-    }
-
-    private long nextId() {
-        return ++lastId;
-    }
-    
-    /**
-     * add a deadline to a task
-     * @param Id
-     * @param date
-     */
-    private void deadLine(String finCommande){
-    	
-    	 String[] subcommandRest = finCommande.split(" ", 2);      
-         int id = Integer.parseInt(subcommandRest[0]);
-         
-         for(int i=0; i<tasks.size(); i++){
-         	Project project = tasks.get(i);
-            for (Task task : project.getList()) {
-                 if (task.getId() == id) {
-                     task.setDeadline(subcommandRest[1]);
-                     return;
-                 }
-             }
-         }
-    }
-    
-    /**
-     * Displays all of the tasks which the deadline is today
-     */
-    private void today(){
-    	// We take today's date
-    	String format = "dd/MM/yy";
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format); 
-        java.util.Date date = new java.util.Date();
-        
-        for(int i=0; i<tasks.size(); i++){
-         	Project project = tasks.get(i);
-            for (Task task : project.getList()) {
-            	//Si la deadline est aujourd'hui 
-                if (task.getDeadline().equals(formater.format(date))) {
-                	//On affiche la tache
-                	out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
-                    return;
-                }
-            }
-        }
-        
     }
 }

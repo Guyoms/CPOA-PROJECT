@@ -6,7 +6,7 @@ public class Help implements Command {
 	
 	@Override
 	public List<Project> execute(String commandLine, List<Project> projects) {
-		System.out.println(Today.HelpString()+"\n"+Deadline.HelpString()+"\n"+Delete.HelpString()+"\n"+Help.HelpString()+"\n");
+		System.out.println(Add.HelpString()+view.HelpString()+Deadline.HelpString()+"\n"+Today.HelpString()+"\n"+Delete.HelpString()+"\n"+Help.HelpString()+"\n");
 		return projects;
 	}
 	

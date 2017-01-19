@@ -2,8 +2,9 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
-/**
- * Shows the tasks' list of each project 
+
+/*
+ * Manage the display of tasks and projects
  */
 public class view implements Command {
 
@@ -11,6 +12,9 @@ public class view implements Command {
 	public List<Project> execute(String commandLine, List<Project> projects) {
 		
 		switch(commandLine){
+		/*
+		 * Shows the tasks' list of each project
+		 */
 			case "by project":
 				for(int i=0; i<projects.size(); i++){
 		        	Project project = projects.get(i);
