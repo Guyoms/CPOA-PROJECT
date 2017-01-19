@@ -2,6 +2,9 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
+/**
+ * Shows the tasks' list of each project 
+ */
 public class view implements Command {
 
 	@Override

@@ -27,11 +27,11 @@ public final class TaskList implements Runnable {
 		ListCommands.put("delete", new Delete());
 
 		//ListCommands.put("add", new Add());
-		//ListCommands.put("check", new Check());
+		ListCommands.put("check", new Check());	
 		//ListCommands.put("uncheck", new Uncheck());
 		//ListCommands.put("deadline", new Deadline());
 		ListCommands.put("today", new Today());
-		//ListCommands.put("help", new Help());
+		ListCommands.put("help", new Help());
 		
 		ListCommands.put("deadline", new Deadline());
 		ListCommands.put("view", new view());
@@ -56,7 +56,8 @@ public final class TaskList implements Runnable {
     }
 
     public void run() {
-    	help();
+    	Help.HelpString();
+    	 ListCommands.get("help").execute("random", tasks);
         while (true) {
             out.print("> ");
             out.flush();
@@ -96,18 +97,6 @@ public final class TaskList implements Runnable {
             case "add":
                 add(commandRest[1]);
                 break;
-            case "check":
-                check(commandRest[1]);
-                break;
-            case "uncheck":
-                uncheck(commandRest[1]);
-                break;
-            case "help":
-                help();
-                break;
-            case "deadline":
-            	deadLine(commandRest[1]);
-            	break;
             default:
                 error(command);
                 break;
@@ -210,7 +199,7 @@ public final class TaskList implements Runnable {
     /**
      * Displays commands' list
      */
-    private void help() {
+    /*private void help() {
     	
     	
         out.println("Commands:");
@@ -233,7 +222,7 @@ public final class TaskList implements Runnable {
 					    + "  quit :\n"
 					    + "\t-close the application");
         
-    }
+    }*/
     
     /*
      * 
