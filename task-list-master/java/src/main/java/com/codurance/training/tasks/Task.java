@@ -20,7 +20,7 @@ public final class Task extends Observable{
         this.id = id;
         this.description = description;
         this.done = done;
-        this.deadline = null;
+        this.deadline = "pas de deadline";
     }
     
     /**
