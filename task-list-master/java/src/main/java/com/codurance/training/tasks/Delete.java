@@ -20,8 +20,7 @@ public class Delete implements Command {
 		
 	}
 
-	@Override
-	public String toString() {
+	public static String HelpString() {
 		String retour = "  delete <task ID> :\n" + "\t-delete the task with the ID <task ID>";
 		return retour;
 	}

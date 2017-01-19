@@ -4,8 +4,7 @@ import java.util.List;
 
 public class Deadline implements Command {
 
-	@Override
-	public String toString() {
+	public static String HelpString() {
 		return  "  deadline <task ID> <dd/MM/yy> :\n"
         		+ "\t-set a deadline to a task";
 	}

@@ -24,8 +24,7 @@ public class Today implements Command {
         return projects;
 	}
 
-	@Override
-	public String toString() {
+	public static String HelpString() {
 		String retour = "  today :\n" + "\t-displays all of the tasks which the deadline is today";
 		return retour;
 	}

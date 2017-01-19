@@ -28,8 +28,8 @@ public class view implements Command {
 		return projects;
 	}
 
-	@Override
-	public String toString() {
+	
+	public static String HelpString() {
        return 	"  view by :\n"
         		+ "\t-project : shows the tasks' list of each project\n"
         		+ "\t-date : shows the tasks' list by date\n"

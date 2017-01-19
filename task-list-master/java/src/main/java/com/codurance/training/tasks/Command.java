@@ -4,8 +4,9 @@ import java.util.List;
 
 public interface Command {
 
-	@Override
-	String toString();
+	public static String HelpString(){
+		return "help method";
+	}
 
 	List<Project> execute(String commandLine, List<Project> projects);
 	
