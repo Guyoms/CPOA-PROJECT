@@ -78,7 +78,6 @@ public final class TaskList implements Runnable {
         else{
         	arguments = commandRest[1];
         }
-        
         try{
 
         	tasks = ListCommands.get(command).execute(arguments, tasks);
@@ -88,56 +87,6 @@ public final class TaskList implements Runnable {
         }
     }
 
-
-
-
-
-    /**
-     * Add a task to the tasks' list of a project with its description
-     * @param project
-     * @param description
-     */
-
-    /**
-     * Check the task with the id as "Done"
-     * @param idString
-     */
-    private void check(String idString) {
-        setDone(idString, true);
-    }
-
-    /**
-     * Check the task with the id as "To Do"
-     * @param idString
-     */
-    private void uncheck(String idString) {
-        setDone(idString, false);
-    }
-
-    /**
-     * Set a task to "done" or "to Do"
-     * @param idString
-     * @param done
-     */
-    private void setDone(String idString, boolean done) {
-        int id = Integer.parseInt(idString);
-        for(int i=0; i<tasks.size(); i++){
-        	Project project = tasks.get(i);
-            for (Task task : project.getList()) {
-                if (task.getId() == id) {
-                	//Calls the setDone method in the class Task.java
-                    task.setDone(done);
-                    return;
-                }
-            }
-        }
-        out.printf("Could not find a task with an ID of %d.", id);
-        out.println();
-    }
-
-    /**
-     * Displays commands' list
-     */
 
     /**
      * Dislays an error when the command is not recognized
