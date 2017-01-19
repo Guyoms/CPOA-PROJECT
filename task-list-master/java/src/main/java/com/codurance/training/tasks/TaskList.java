@@ -26,11 +26,12 @@ public final class TaskList implements Runnable {
     public static void InitiateListCommands() {
 		ListCommands.put("delete", new Delete());
 		ListCommands.put("add", new Add());
-		ListCommands.put("check", new Check());	
+		ListCommands.put("check", new Check());
 		ListCommands.put("today", new Today());
 		ListCommands.put("help", new Help());
 		ListCommands.put("deadline", new Deadline());
 		ListCommands.put("view", new view());
+		ListCommands.put("attach", new Attach());
 	}
 
 	//private final Map<String, List<Task>> tasks = new LinkedHashMap<>();

@@ -15,6 +15,7 @@ public class Help implements Command {
 						+Deadline.HelpString()+"\n"
 						+Today.HelpString()+"\n"
 						+Delete.HelpString()+"\n"
+						+Attach.HelpString()+"\n"
 						+Help.HelpString()+"\n"
 						+"  quit :\n"
 					    +"\t-close the application");
