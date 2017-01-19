@@ -90,6 +90,12 @@ public final class TaskList implements Runnable {
 
 
     /**
+     * Add a task to the tasks' list of a project with its description
+     * @param project
+     * @param description
+     */
+
+    /**
      * Dislays an error when the command is not recognized
      * @param command
      */
