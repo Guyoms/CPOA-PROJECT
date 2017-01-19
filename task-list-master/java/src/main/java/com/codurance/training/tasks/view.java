@@ -2,6 +2,7 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
+
 /*
  * Manage the display of tasks and projects
  */

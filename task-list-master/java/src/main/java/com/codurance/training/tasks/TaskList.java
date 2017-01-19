@@ -25,13 +25,10 @@ public final class TaskList implements Runnable {
     private static Map<String, Command> ListCommands = new HashMap<String, Command>();
     public static void InitiateListCommands() {
 		ListCommands.put("delete", new Delete());
-
 		ListCommands.put("add", new Add());
-		//ListCommands.put("check", new Check());
-		ListCommands.put("deadline", new Deadline());
+		ListCommands.put("check", new Check());	
 		ListCommands.put("today", new Today());
 		ListCommands.put("help", new Help());
-		
 		ListCommands.put("deadline", new Deadline());
 		ListCommands.put("view", new view());
 	}
@@ -53,7 +50,8 @@ public final class TaskList implements Runnable {
     }
 
     public void run() {
-    	help();
+    	Help.HelpString();
+    	 ListCommands.get("help").execute("random", tasks);
         while (true) {
             out.print("> ");
             out.flush();
@@ -86,19 +84,7 @@ public final class TaskList implements Runnable {
         	tasks = ListCommands.get(command).execute(arguments, tasks);
         }
         catch(Exception e){
-        	
-        }
-        
-        switch (command) {
-            case "check":
-                check(commandRest[1]);
-                break;
-            case "uncheck":
-                uncheck(commandRest[1]);
-                break;
-            default:
-                error(command);
-                break;
+        	error(command);
         }
     }
 
@@ -152,30 +138,6 @@ public final class TaskList implements Runnable {
     /**
      * Displays commands' list
      */
-    private void help() {
-    	
-    	
-        out.println("Commands:");
-        out.println(ListCommands.get("view").toString());
-        out.println("  add project <project name> :\n"
-        		+ "\t-create a new project named <project name> with an empty list of tasks");
-        out.println("  add task <project name> <task description> :\n"
-        		+ "\t-add a task to the tasks' list of the project <project name> with a description");
-        out.println("  check <task ID> :\n"
-        		+ "\t-set the task with the ID <task ID> as Done");
-        out.println("  uncheck <task ID> :\n"
-        		+ "\t-set the task with the ID <task ID> as To Do");
-        out.println(ListCommands.get("deadline").toString());
-        out.println("  today :\n"
-        		+ "\t-displays all of the tasks which the deadline is today");
-        out.println("  delete <task ID> :\n"
-        		+ "\t-delete the task with the ID <task ID>");
-        out.println("  help : \n"
-						+ "\t-displays the commands' list \n"
-					    + "  quit :\n"
-					    + "\t-close the application");
-        
-    }
 
     /**
      * Dislays an error when the command is not recognized
