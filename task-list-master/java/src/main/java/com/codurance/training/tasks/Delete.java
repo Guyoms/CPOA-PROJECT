@@ -2,9 +2,16 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
+/**
+ * 
+ * Allow to delete tasks
+ *
+ */
 public class Delete implements Command {
 
 	public List<Project> execute(String commandLine, List<Project> projects) {
+		
+		//cast the string in int
 		int id = Integer.parseInt(commandLine);
     	for(int i=0; i<projects.size(); i++){
     		Project project = projects.get(i);

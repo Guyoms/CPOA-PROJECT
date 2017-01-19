@@ -6,33 +6,35 @@ public class Attach implements Command {
 
 	@Override
 	public List<Project> execute(String commandLine, List<Project> projects) {
-		/*
-		 * On recupere les arguments (nomprojet et id String)
-		 */
+		
+		//Retrieve the arguments (nomProjet and id String)
 		String[] subcommandRest = commandLine.split(" ", 2);
 		String nomprojet = subcommandRest[0];
         String idString = subcommandRest[1];
         
-        /*
-         * On convertit l'id en int
-         */
+        // Convert the string (id) to an integer
         int id = Integer.parseInt(idString);
-        //On parcours les projets
+        
+        //Run through the projects
 		for(int i=0; i<projects.size(); i++){
         	Project project = projects.get(i);
-        	//On parcours les taches du projet selectionne
+        	
+        	//Run through the tasks' of the selected project
             for (Task task : project.getList()) {
-            	//Si la tache a l'id recherche
+            	
+            	//If the task has the needed id
                 if (task.getId() == id) {
                 	Project projectTasks = null;
-                	//On cherche maintenant le projet a qui on rattachera la tache
+                	
+                	//Seek the project to attach the task
                     for(int r=0; r<projects.size();r++){
-                    	//Si le projet a le bon nom, on le memorise
+                    	
+                    	//If the project has the good name, we keep it
                 		if (projects.get(r).getNom().equals(nomprojet)){
                 			projectTasks = projects.get(r);
                 		}
                 	}
-                    //
+                    
                     if (projectTasks == null) {
                         System.out.printf("Could not find a project with the name \"%s\".", nomprojet);
                         System.out.println();
@@ -51,7 +53,7 @@ public class Attach implements Command {
 	
 	public static String HelpString() {
 	       return 	"  attach <project name> <task ID> :\n"
-	        		+ "\t-attach a task to the project named <project name>\n";
+	        		+ "\t-attach a task to the project named <project name>";
 		}
 
 }

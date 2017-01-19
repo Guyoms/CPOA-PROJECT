@@ -14,8 +14,11 @@ public class Deadline implements Command {
 
 	@Override
 	public List<Project> execute(String commandLine, List<Project> projects) {
-    	
-   	 String[] subcommandRest = commandLine.split(" ", 2);         
+		
+	 //Split the command     	
+   	 String[] subcommandRest = commandLine.split(" ", 2);     
+   	 
+   	 //Cast the String to an integer
         int id = Integer.parseInt(subcommandRest[0]);
         
         for(int i=0; i<projects.size(); i++){

@@ -1,9 +1,11 @@
 package com.codurance.training.tasks;
 
-import java.sql.Date;
-import java.util.Observable;
 
-
+/**
+ * 
+ * This class manages the Tasks 
+ *
+ */
 public final class Task{
     private final long id;
     private final String description;
@@ -11,7 +13,7 @@ public final class Task{
     private String deadline;
 
     /**
-     *  Constructeur paramétré
+     *  Parameterized constructors
      * @param id
      * @param description
      * @param done
@@ -24,7 +26,7 @@ public final class Task{
     }
     
     /**
-     * Constructeur paramétré
+     * Parameterized constructors
      * @param id
      * @param description
      * @param done
@@ -49,14 +51,26 @@ public final class Task{
         return done;
     }
 
+    /**
+     * Set a task to done
+     * @param done
+     */
     public void setDone(boolean done) {
         this.done = done;
     }
-
+    
+	/**
+	 * 
+	 * @return deadline
+	 */
 	public String getDeadline() {
 		return deadline;
 	}
 
+	/**
+	 * 
+	 * @param deadline
+	 */
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}

@@ -12,8 +12,12 @@ public class Check implements Command {
 
 	@Override
 	public List<Project> execute(String commandLine, List<Project> projects) {
-
+		
+		
+		 //Split the command
 		 String[] commandRest = commandLine.split(" ", 2);
+		 
+		 //take the "yes/no" of the commandLine 
 	     String choix = commandRest[0];
 		
 	    if (choix.equals("yes")){    
@@ -35,7 +39,7 @@ public class Check implements Command {
         	Project project = projects.get(i);
             for (Task task : project.getList()) {
                 if (task.getId() == id) {
-                	//Calls the setDone method in the class Task.java
+                	//Calls the setDone method 
                     task.setDone(done);
                     return;
                 }
@@ -49,7 +53,7 @@ public class Check implements Command {
     
 	public static String HelpString() {        
 		String retour = "  check yes/no <task ID> :\n"
-				+ "\tset the task with the ID <Task ID> as Done or To Do";
+				+ "\t-set the task with the ID <Task ID> as Done or To Do";
 		return retour;
 	}
 }
