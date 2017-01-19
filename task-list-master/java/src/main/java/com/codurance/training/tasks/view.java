@@ -23,10 +23,10 @@ public class view implements Command {
 				break;
 			/*case "by date":
 				System.out.println("TODO DATE");
-				break;
+				break;*/
 			case "by dead line":
 				System.out.println("TODO DEADLINE");
-				break;*/
+				break;
 		}
 		return projects;
 	}
