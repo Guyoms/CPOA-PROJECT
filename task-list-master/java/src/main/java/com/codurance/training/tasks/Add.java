@@ -11,8 +11,15 @@ public class Add implements Command {
 		String[] subcommandRest = commandLine.split(" ", 2);
         String subcommand = subcommandRest[0];
         if (subcommand.equals("project")) {
-        	projects.add(new Project(subcommandRest[1]));
+        	String name = subcommandRest[1];
+        	/*
+        	 * Create a new project named "name" with an empty list of tasks
+        	 */
+        	projects.add(new Project(name));
         } else if (subcommand.equals("task")) {
+        	/*
+        	 * Add a task to the tasks' list of a project with its description
+        	 */
             String[] projectTask = subcommandRest[1].split(" ", 2);
             List<Task> projectTasks = null;
             for(int i=0; i<projects.size();i++){

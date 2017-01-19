@@ -2,6 +2,9 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
+/*
+ * Displays all of the tasks which the deadline is today
+ */
 public class Today implements Command {
 
 	@Override
