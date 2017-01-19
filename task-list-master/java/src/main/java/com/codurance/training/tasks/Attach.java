@@ -2,6 +2,11 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
+/**
+ * 
+ * Attach a task to an other project 
+ *
+ */
 public class Attach implements Command {
 
 	@Override

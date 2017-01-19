@@ -8,7 +8,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class TaskList implements Runnable {
+/**
+ * 
+ * This class manages and runs the application
+ *
+ */
+public final class Application implements Runnable {
     private static final String QUIT = "quit";
     
     //List of project with a list of their tasks
@@ -37,10 +42,10 @@ public final class TaskList implements Runnable {
     	InitiateListCommands();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(System.out);
-        new TaskList(in, out).run();
+        new Application(in, out).run();
     }
 
-    public TaskList(BufferedReader reader, PrintWriter writer) {
+    public Application(BufferedReader reader, PrintWriter writer) {
         this.in = reader;
         this.out = writer;
     }

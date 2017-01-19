@@ -27,7 +27,7 @@ public final class ApplicationTest {
     public ApplicationTest() throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(new PipedInputStream(inStream)));
         PrintWriter out = new PrintWriter(new PipedOutputStream(outStream), true);
-        TaskList taskList = new TaskList(in, out);
+        Application taskList = new Application(in, out);
         applicationThread = new Thread(taskList);
     }
 
@@ -53,6 +53,7 @@ public final class ApplicationTest {
 
     @Test(timeout = 1000) public void
     it_works() throws IOException {
+    	
     	readLines("  add project <project name> :\n"
 						+"\t-create a new project named <project name> with an empty list of tasks\n"
 						+ "  add task <project name> <task description> :\n"

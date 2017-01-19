@@ -2,8 +2,10 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
-/*
- * add a deadline to a task
+/**
+ * 
+ * Add a deadline to a task
+ * 
  */
 public class Deadline implements Command {
 
