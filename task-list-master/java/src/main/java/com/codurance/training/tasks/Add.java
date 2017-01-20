@@ -13,6 +13,11 @@ public class Add implements Command {
 	private long lastId = 0;
 	boolean test;
 	
+	/**
+	 * Create a (main) Project
+	 * Or create a Task and add it to a Project or a subproject
+	 * Or create a (sub)Project and add it to a Project or a subproject
+	 */
 	@Override
 	public List<Project> execute(String commandLine, List<Project> projects) {
 		
@@ -103,13 +108,17 @@ public class Add implements Command {
 	}
 	
 	/**
-	 * 
+	 * Method used to determine the id to give to the new Task (uniqueness)
 	 * @return lastId
 	 */
 	private long nextId() {
         return ++lastId;
     }
 	
+	/**
+	 * The help method (How to use add)
+	 * @return
+	 */
 	public static String HelpString() {
 		
 		String retour = "  add project <project name> :\n"
@@ -121,6 +130,14 @@ public class Add implements Command {
 		return retour;
 	}
 	
+	/**
+	 * Method used to search recursively the project in which to place the task or subproject
+	 * @param parent
+	 * @param name
+	 * @param projectTasks
+	 * @param mode
+	 * @return
+	 */
 	public ArrayList<Task> AddInASubproject(String parent, String name, ArrayList<Task> projectTasks, String mode){
 		this.test = false;
 		ArrayList<Task> subProject = new ArrayList<Task>();

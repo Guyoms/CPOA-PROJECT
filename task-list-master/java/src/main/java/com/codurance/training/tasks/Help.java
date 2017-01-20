@@ -2,12 +2,12 @@ package com.codurance.training.tasks;
 
 import java.util.List;
 
-/*
+/**
  * Displays commands' list
  */
 public class Help implements Command {
 	
-	/*
+	/**
 	 * Display the help (how to use each methods or one in particular)
 	 */
 	@Override
@@ -51,8 +51,9 @@ public class Help implements Command {
 		return projects;
 	}
 	
-	/*
+	/**
 	 * The help method (How to use help)
+	 * @return
 	 */
 	public static String HelpString() {
 		String retour = "  help : \n\t-displays the commands' list";
