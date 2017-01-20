@@ -3,6 +3,11 @@ package com.codurance.training.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ *  This class manages the creation of new tasks or projects
+ *
+ */
 public class Add implements Command {
 
 	private long lastId = 0;
@@ -10,15 +15,22 @@ public class Add implements Command {
 	
 	@Override
 	public List<Project> execute(String commandLine, List<Project> projects) {
+		
+		// Split the command
 		String[] subcommandRest = commandLine.split(" ", 2);
         String subcommand = subcommandRest[0];
+        
+        // if the parameter is project
         if (subcommand.equals("project")) {
         	String name = subcommandRest[1];
         	/*
         	 * Create a new project named "name" with an empty list of tasks
         	 */
         	projects.add(new Project(nextId(), name));
+        	
+        	
         }
+        // if the parameter is task
         else if (subcommand.equals("task")) {
         	/*
         	 * Add a task to the tasks' list of a project with its description
@@ -31,6 +43,7 @@ public class Add implements Command {
             	projectTasks = project.getList();
         		if (project.getDescription().equals(parent)){
         			test = true;
+        			// Add a new task in the project
         			projectTasks.add(new Task(nextId(), description, false));
         		}
         		else if (project instanceof Project){
@@ -41,26 +54,32 @@ public class Add implements Command {
         		}
         	}
             
+            // if the project is not found
             if (projectTasks == null) {
                 System.out.printf("Could not find a project with the name \"%s\".", projectTask[0]);
                 System.out.println();
                 return projects;
             }
-           // projectTasks.add(new Task(nextId(), projectTask[1], false));
         }
+        // if the parameter is subproject
         else if (subcommand.equals("subproject")) {
         	/*
         	 * Add a subproject to the tasks' list of a project
         	 */
+        	
         	String[] decoupe = subcommandRest[1].split(" ", 2);
-        	String parent = decoupe[0]; /*parent project*/
-        	String name = decoupe[1]; /*the name of the subproject*/
-        	String[] projectTask = subcommandRest[1].split(" ", 2);
+        	
+        	//parent project
+        	String parent = decoupe[0];
+        	
+        	//the name of the subproject
+        	String name = decoupe[1];
+        	
             ArrayList<Task> projectTasks = null;
             test = false;
             for(Project project : projects){
             	projectTasks = project.getList();
-        		if (project.getDescription().equals(projectTask[0])){
+        		if (project.getDescription().equals(parent)){
         			test = true;
         			projectTasks.add(new Project(nextId(), name));
         		}
@@ -76,9 +95,17 @@ public class Add implements Command {
             System.out.println();
             return projects;
         }
+        //if it's a wrong parameter
+        else{
+        	System.out.println("Error, the command add "+subcommand+" does not exist.");
+        }
         return projects;
 	}
 	
+	/**
+	 * 
+	 * @return lastId
+	 */
 	private long nextId() {
         return ++lastId;
     }
@@ -88,7 +115,9 @@ public class Add implements Command {
 		String retour = "  add project <project name> :\n"
 						+"\t-create a new project named <project name> with an empty list of tasks\n"
 						+ "  add task <project name> <task description> :\n"
-						+"\t-add a task to the tasks' list of the project <project name> with a description";
+						+"\t-add a task to the tasks' list of the project <project name> with a description\n"
+						+ "  add subproject <project name> <subproject name> :\n"
+						+"\t-add a project to the tasks' list of the project <project name>";
 		return retour;
 	}
 	
