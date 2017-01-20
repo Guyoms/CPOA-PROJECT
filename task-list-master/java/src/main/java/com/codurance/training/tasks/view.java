@@ -8,11 +8,14 @@ import java.util.List;
  */
 public class view implements Command {
 
+	/**
+	 * Show the tasks'list of each project in different ways depending on the user's request
+	 */
 	@Override
 	public List<Project> execute(String commandLine, List<Project> projects) {
 		
 		switch(commandLine){
-		/*
+		/**
 		 * Shows the tasks' list of each project
 		 */
 			case "by project":
@@ -59,8 +62,11 @@ public class view implements Command {
 		return projects;
 	}
 	
-	/*
+	/**
 	 * Display recursively the subtasks (tasks of subproject)
+	 * @param project
+	 * @param nbRecur
+	 * @param mode
 	 */
 	public void sousAffichage(Project project, int nbRecur, String mode){
 		String tabulation = "";
@@ -88,7 +94,7 @@ public class view implements Command {
 		}
 	}
 
-	/*
+	/**
 	 * The help method (How to use view)
 	 */
 	public static String HelpString() {

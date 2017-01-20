@@ -4,9 +4,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 
+ * Allow to delete tasks
+ *
+ */
 public class Delete implements Command {
 
+	/**
+	 * Method to delete a task (by its id)
+	 */
 	public List<Project> execute(String commandLine, List<Project> projects) {
+		//cast the string in int
 		int id = Integer.parseInt(commandLine);
 		boolean test1 = false, test2 = false;
 		Iterator<Project> iterProj = projects.iterator();
@@ -31,6 +40,12 @@ public class Delete implements Command {
 		
 	}
 
+	/**
+	 * Method to search recursively the task to delete in a subproject
+	 * @param id
+	 * @param list
+	 * @return
+	 */
 	private boolean DeleteInASubproject(int id, ArrayList<Task> list) {
 		boolean test1 = false, test2 = false;
 		Iterator<Task> iterTask = list.iterator();
@@ -50,6 +65,10 @@ public class Delete implements Command {
         return false;
 	}
 
+	/**
+	 * The help method (How to use delete)
+	 * @return
+	 */
 	public static String HelpString() {
 		String retour = "  delete <task ID> :\n" + "\t-delete the task with the ID <task ID>";
 		return retour;
