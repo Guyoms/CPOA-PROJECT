@@ -84,6 +84,7 @@ public final class TaskList implements Runnable {
         	tasks = ListCommands.get(command).execute(arguments, tasks);
         }
         catch(Exception e){
+        	System.out.println(e);
         	error(command);
         }
     }

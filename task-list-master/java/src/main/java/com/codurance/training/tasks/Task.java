@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.Observable;
 
 
-public final class Task{
+public class Task{
     private final long id;
     private final String description;
     private boolean done;

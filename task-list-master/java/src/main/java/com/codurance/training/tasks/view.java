@@ -18,9 +18,12 @@ public class view implements Command {
 			case "by project":
 				for(int i=0; i<projects.size(); i++){
 		        	Project project = projects.get(i);
-		        	System.out.println(project.getNom());
+		        	System.out.println(project.getDescription());
 		            for (Task task : project.getList()) {
 		            	System.out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+		            	if (task instanceof Project){
+		            		sousAffichage((Project) task, 1);
+		            	}
 		            }
 		            System.out.println();
 		        }
@@ -33,6 +36,19 @@ public class view implements Command {
 				break;
 		}
 		return projects;
+	}
+	
+	public void sousAffichage(Project project, int nbRecur){
+		String tabulation = "";
+		for (int i =0; i<nbRecur;i++){
+			tabulation += "  ";
+		}
+		for (Task task : project.getList()) {
+        	System.out.printf(tabulation +"    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+        	if (task instanceof Project){
+        		sousAffichage((Project) task, nbRecur+1);
+        	}
+        }
 	}
 
 	
