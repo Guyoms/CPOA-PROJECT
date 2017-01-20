@@ -53,37 +53,40 @@ public final class ApplicationTest {
 
     @Test(timeout = 1000) public void
     it_works() throws IOException {
-    	readLines("Commands:");
-    	readLines("  show :\n"
-        		+ "\t-shows the tasks' list of each project");
-        readLines("  view by :\n"
-        		+ "\t-project : shows the tasks' list of each project"
-        		+ "\t-date : shows the tasks' list by date"
-        		+ "\t-dead line : shows the tasks' list of each project"
-        		);
+
     	readLines("  add project <project name> :\n"
-        		+ "\t-create a new project named <project name> with an empty list of tasks");
-    	readLines("  add task <project name> <task description> :\n"
-        		+ "\t-add a task to the tasks' list of the project <project name> with a description");
-    	readLines("  check <task ID> :\n"
-        		+ "\t-set the task with the ID <task ID> as Done");
-    	readLines("  uncheck <task ID> :\n"
-        		+ "\t-set the task with the ID <task ID> as To Do");
-    	readLines("  deadline <task ID> <dd/MM/yy> :\n"
-         		+ "\t-set a deadline to a task");
-        readLines("  today :\n"
-         		+ "\t-displays all of the tasks which the deadline is today");
-    	readLines("  help : \n"
-						+ "\t-displays the commands' list \n"
-					    + "  quit :\n"
-					    + "\t-close the application");
-        execute("show");
+				+"\t-create a new project named <project name> with an empty list of tasks\n"
+				+ "  add task <project name> <task description> :\n"
+				+"\t-add a task to the tasks' list of the project <project name> with a description");
+
+		readLines(" view by :\n"
+				+ "\t-project : shows the tasks' list of each project\n"
+				+ "\t-deadline : shows the tasks' list of each project");
+		
+		readLines("  check yes/no <task ID> :\n"
+				+ "\tset the task with the ID <Task ID> as Done or To Do");
+		
+		readLines("  deadline <task ID> <dd/MM/yy> :\n"
+				+ "\t-set a deadline to a task");
+		
+		readLines("  today :\n" + "\t-displays all of the tasks which the deadline is today");
+		
+		readLines("  delete <task ID> :\n" + "\t-delete the task with the ID <task ID>");
+		
+		readLines("  attach <project name> <task ID> :\n"
+		    		+ "\t-attach a task to the project named <project name>\n");
+		
+		readLines("  help : \n\t-displays the commands' list");
+		readLines("  quit :\n"
+					    +"\t-close the application");
+    	
+        execute("view by project");
         
         execute("add project secrets");
         execute("add task secrets Eat more donuts.");
         execute("add task secrets Destroy all humans.");
 
-        execute("show");
+        execute("view by project");
         readLines(
             "secrets",
             "    [ ] 1: Eat more donuts.",
@@ -99,12 +102,12 @@ public final class ApplicationTest {
         execute("add task training Outside-In TDD");
         execute("add task training Interaction-Driven Design");
 
-        execute("check 1");
-        execute("check 3");
-        execute("check 5");
-        execute("check 6");
+        execute("check yes 1");
+        execute("check yes 3");
+        execute("check yes 5");
+        execute("check yes 6");
 
-        execute("show");
+        execute("view by project");
         readLines(
                 "secrets",
                 "    [x] 1: Eat more donuts.",

@@ -51,8 +51,8 @@ public final class TaskList implements Runnable {
     }
 
     public void run() {
-    	Help.HelpString();
-    	 ListCommands.get("help").execute("random", tasks);
+
+    	ListCommands.get("help").execute(" ", null);
         while (true) {
             out.print("> ");
             out.flush();
@@ -89,12 +89,6 @@ public final class TaskList implements Runnable {
         }
     }
 
-
-    /**
-     * Add a task to the tasks' list of a project with its description
-     * @param project
-     * @param description
-     */
 
     /**
      * Dislays an error when the command is not recognized
