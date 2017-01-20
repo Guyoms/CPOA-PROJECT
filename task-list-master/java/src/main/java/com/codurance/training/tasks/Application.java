@@ -1,28 +1,31 @@
 package com.codurance.training.tasks;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-
-import javax.swing.ListCellRenderer;
-import javax.swing.text.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-public final class TaskList implements Runnable {
+/**
+ * 
+ * This class manages and runs the application
+ *
+ */
+public final class Application implements Runnable {
     private static final String QUIT = "quit";
     
-    private List<Project> tasks = new ArrayList<Project>();
     //List of project with a list of their tasks
+    private List<Project> tasks = new ArrayList<Project>();
+    
+    //List of commands
     private static Map<String, Command> ListCommands = new HashMap<String, Command>();
+    
+    /**
+     * Add of the commands in the Map
+     */
     public static void InitiateListCommands() {
 		ListCommands.put("delete", new Delete());
 		ListCommands.put("add", new Add());
@@ -34,7 +37,6 @@ public final class TaskList implements Runnable {
 		ListCommands.put("attach", new Attach());
 	}
 
-	//private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
     private final BufferedReader in;
     private final PrintWriter out;
 
@@ -42,17 +44,26 @@ public final class TaskList implements Runnable {
     	InitiateListCommands();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(System.out);
-        new TaskList(in, out).run();
+        new Application(in, out).run();
     }
 
-    public TaskList(BufferedReader reader, PrintWriter writer) {
+    /**
+     * Parameterized constructors
+     * @param reader
+     * @param writer
+     */
+    public Application(BufferedReader reader, PrintWriter writer) {
         this.in = reader;
         this.out = writer;
     }
 
+    /**
+     * This method runs the program
+     */
     public void run() {
-    	Help.HelpString();
-    	 ListCommands.get("help").execute("random", tasks);
+    	
+    	//Show the available commands
+    	ListCommands.get("help").execute("random", tasks);
         while (true) {
             out.print("> ");
             out.flush();
@@ -69,6 +80,11 @@ public final class TaskList implements Runnable {
         }
     }
 
+    /**
+     * This method calls the different commands and executes them
+     * @param commandLine
+     * @throws ArrayIndexOutOfBoundsException
+     */
     private void execute(String commandLine) throws ArrayIndexOutOfBoundsException {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
@@ -88,13 +104,6 @@ public final class TaskList implements Runnable {
         	error(command);
         }
     }
-
-
-    /**
-     * Add a task to the tasks' list of a project with its description
-     * @param project
-     * @param description
-     */
 
     /**
      * Dislays an error when the command is not recognized
